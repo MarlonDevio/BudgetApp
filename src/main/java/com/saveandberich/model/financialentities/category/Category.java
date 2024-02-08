@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * The Category class represents a category of transactions. It is an abstract
- * class that provides
+ * The Category class represents a category of transactions. It is an abstract class that provides
  * common functionality for different types of categories.
  */
 public abstract class Category {
@@ -27,25 +26,30 @@ public abstract class Category {
   }
 
   /**
-   * This method is called when a transaction is added to the category's
-   * transaction list.
-   * Subclasses can override this method to perform additional actions when a
-   * transaction is added.
+   * This method is called when a transaction is added to the category's transaction list.
+   * Subclasses can override this method to perform additional actions when a transaction is added.
    *
    * @param transaction the transaction that was added
    */
   protected abstract void transactionAddedDisplay(Transaction transaction);
 
   /**
-   * Adds a transaction to the category's transaction list. This method also calls
-   * the
+   * Adds a transaction to the category's transaction list. This method also calls the
    * transactionAddedDisplay method to perform any necessary actions.
    *
    * @param transaction the transaction to be added
    */
-  public void addTransactionToList(Transaction transaction) {
+  public boolean addTransactionToList(Transaction transaction) {
+    if (transactionList.stream().anyMatch(tr -> tr.getId().equals(transaction.getId()))) {
+      System.out.println("Duplicate transaction. Was not added!");
+      return false;
+    }
     transactionList.add(transaction);
-    transactionAddedDisplay(transaction);
+    return true;
+  }
+
+  public boolean removeTransactionFromList(Transaction transaction) {
+    return transactionList.remove(transaction);
   }
 
   /**

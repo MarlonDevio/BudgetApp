@@ -14,8 +14,13 @@ public class PurchaseListView extends View {
    */
   @Override
   public void display() {
+    if (transactionList.size() == 0) {
+      print("The purchase list is empty");
+      return;
+    }
     transactionList
-        .forEach(transaction -> System.out.println(transaction.getDescription() + " " + transaction.getAmount()));
+        .forEach(transaction -> print(transaction.getDescription() + " $" + transaction.getAmount()));
+    print("Total sum: $" + getAmount());
   }
 
   /**
@@ -26,5 +31,6 @@ public class PurchaseListView extends View {
   @Override
   public void update(UpdatedInfo info) {
     transactionList = info.getAllExpenseTransactions();
+    amount = info.getTotalExpenses();
   }
 }

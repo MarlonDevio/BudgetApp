@@ -10,11 +10,11 @@ import com.saveandberich.view.PurchaseView;
 import com.saveandberich.view.View;
 
 /**
- * The Controller class handles the main logic and flow of the SaveAndBeRich
+ * The ViewController class handles the main logic and flow of the SaveAndBeRich
  * application.
  * It manages the different views and user interactions.
  */
-public class Controller {
+public class ViewController  {
 
   BankAccountService bankAccountService = BankAccountService.getInstance();
   TransactionFactory transactionFactory = new TransactionFactory();
@@ -44,9 +44,13 @@ public class Controller {
     while (true) {
       displayActionMenu();
       if (currentView.getUserInput().equals("0")) {
+        System.out.println("");
+        System.out.println("Bye!");
         return;
       }
+      System.out.println("");
       handleUserChoice();
+      System.out.println("");
     }
   }
 
@@ -75,8 +79,9 @@ public class Controller {
       case "2" -> {
         setView(purchaseView);
         currentView.display();
-        double amount = Double.parseDouble(currentView.getUserInput());
-        bankAccountService.addTransaction(transactionFactory.create("", amount, "-"));
+        double amount = currentView.getDoubleInput();
+        String description = currentView.getUserInput();
+        bankAccountService.addTransaction(transactionFactory.create(description, amount, "-"));
       }
       case "3" -> {
         setView(purchaseListView);
@@ -88,5 +93,6 @@ public class Controller {
       }
     }
   }
+
 
 }

@@ -14,8 +14,10 @@ public class PurchaseView extends View {
    */
   @Override
   public void display() {
-    print("Enter purchase: ");
+    print("Enter purchase name: ");
     userInput = readInput();
+    print("Enter it's price: ");
+    doubleInput = Double.parseDouble(readInput());
   }
 
   /**

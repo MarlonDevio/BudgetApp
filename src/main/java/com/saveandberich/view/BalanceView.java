@@ -13,7 +13,8 @@ public class BalanceView extends View {
    */
   @Override
   public void display() {
-    print("Total Balance: $" + getAmount());
+    String formatted = String.format("Balance: $%.2f", getAmount());
+    print(formatted);
   }
 
   /**

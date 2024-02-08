@@ -17,6 +17,7 @@ public abstract class View implements Observer, DisplayElement {
   protected double amount;
   protected final Scanner scanner = new Scanner(System.in);
   protected static String userInput;
+  protected static double doubleInput;
 
   /**
    * Returns the user input.
@@ -68,6 +69,10 @@ public abstract class View implements Observer, DisplayElement {
    */
   protected String readInput() {
     return scanner.nextLine();
+  }
+
+  public double getDoubleInput() {
+    return doubleInput;
   }
 
 }
