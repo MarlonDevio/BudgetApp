@@ -9,8 +9,8 @@ public class ExpenseCategory extends Category{
    *
    * @param categoryName the name of the category
    */
-  public ExpenseCategory(String categoryName) {
-    super(categoryName);
+  public ExpenseCategory(String categoryName, String marker) {
+    super(categoryName, marker);
   }
 
   @Override

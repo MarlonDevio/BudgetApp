@@ -1,5 +1,8 @@
 package com.saveandberich.model.service;
 
+import com.saveandberich.model.financialentities.category.Category;
+import com.saveandberich.model.financialentities.category.ExpenseCategory;
+import com.saveandberich.model.financialentities.category.IncomeCategory;
 import com.saveandberich.model.financialentities.transaction.Transaction;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,13 +13,17 @@ import java.util.List;
  */
 public class TransactionManager {
 
+  private final Category expenseCategory = new ExpenseCategory("expense", "-");
+  private final Category incomeCategory = new IncomeCategory("income", "+");
   private final List<Transaction> transactionList;
 
   /**
    * Constructs a new TransactionManager object.
    */
   TransactionManager() {
-    this.transactionList = new ArrayList<>();
+    transactionList = new ArrayList<>();
+    transactionList.addAll(expenseCategory.getTransactionList());
+    transactionList.addAll(incomeCategory.getTransactionList());
   }
 
   /*

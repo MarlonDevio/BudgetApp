@@ -3,6 +3,7 @@ package com.saveandberich.model.financialentities.category;
 import com.saveandberich.model.financialentities.transaction.Transaction;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -11,18 +12,55 @@ import java.util.stream.Collectors;
  */
 public abstract class Category {
 
+  protected final String marker;
   protected final List<Transaction> transactionList;
   protected final String categoryName;
-  protected String categorySubName;
+  protected final List<Category> subCategories;
+
 
   /**
    * Constructs a Category object with the specified category name.
    *
    * @param categoryName the name of the category
    */
-  public Category(String categoryName) {
+  public Category(String categoryName, String marker) {
     this.categoryName = categoryName;
+    this.marker = marker;
     transactionList = new ArrayList<>();
+    subCategories = new ArrayList<>();
+  }
+
+  /* *************************************
+  * CATEGORY REMOVING AND ADDING
+  ***************************************/
+
+  public boolean addCategory(Category category){
+    if(!category.marker.equals(this.marker)){
+      System.out.println("Incorrect category!");
+      return false;
+    }
+    if(subCategories.contains(category)){
+      System.out.println("Duplicate category!");
+      return false;
+    }
+    subCategories.add(category);
+    return true;
+  }
+
+  public boolean removeCategory(Category category){
+    if(!subCategories.contains(category)){
+      System.out.println("No such category present.");
+      return false;
+    }
+    return subCategories.remove(category);
+  }
+
+  /* *************************************
+  * GETTERS AND SETTERS FOR CATEGORYLIST
+  ***************************************/
+
+  public List<Category> getSubCategories() {
+    return subCategories;
   }
 
   /**
@@ -33,6 +71,9 @@ public abstract class Category {
    */
   protected abstract void transactionAddedDisplay(Transaction transaction);
 
+  /* *************************************
+  * ADDING AND REMOVING TRANSACTIONS
+  ***************************************/
   /**
    * Adds a transaction to the category's transaction list. This method also calls the
    * transactionAddedDisplay method to perform any necessary actions.
@@ -80,18 +121,20 @@ public abstract class Category {
     return "I am " + categoryName;
   }
 
-  public String getTotalAmount() {
-    double total = transactionList.stream().mapToDouble(Transaction::getAmount).sum();
-    return "Total " + categoryName + ": " + total;
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Category category)) {
+      return false;
+    }
+    return Objects.equals(categoryName.toLowerCase(), category.categoryName.toLowerCase());
   }
 
-  public String getCompleteTransactionList() {
-    return transactionList.stream()
-        .map(transaction -> transaction.getDescription() + " - " + transaction.getAmount())
-        .collect(Collectors.joining("\n"));
-  }
-
-  public void setCategorySubName(String subName) {
-    categorySubName = subName;
+  @Override
+  public int hashCode() {
+    return Objects.hash(categoryName.toLowerCase());
   }
 }
