@@ -1,4 +1,4 @@
-package io.marlondevio.financial_entities;
+package io.marlondevio.core.financial_entities;
 
 public class IncomeCategory extends Category{
 
@@ -6,9 +6,5 @@ public class IncomeCategory extends Category{
     super(name);
   }
 
-  @Override
-  public void execute() {
 
-
-  }
 }

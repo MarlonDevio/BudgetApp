@@ -1,4 +1,4 @@
-package io.marlondevio.financial_entities;
+package io.marlondevio.core.financial_entities;
 
 public class Transaction {
 

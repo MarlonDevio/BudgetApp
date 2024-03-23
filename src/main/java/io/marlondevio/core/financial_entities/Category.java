@@ -1,15 +1,15 @@
-package io.marlondevio.financial_entities;
+package io.marlondevio.core.financial_entities;
 
 import io.marlondevio.commands.Command;
-import io.marlondevio.financial_entities.Transaction;
 import io.marlondevio.helpers.Helper;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
-public abstract class Category implements Command {
-  private Map<String, Set<Transaction>> typesAndTransactionSet;
+public abstract class Category {
+  protected Map<String, Set<Transaction>> typesAndTransactionSet;
   private String name;
 
   public Category(String name) {
@@ -36,7 +36,7 @@ public abstract class Category implements Command {
   }
 
 
-  private Set<Transaction> getTransactionSet(String typeName) {
+  protected Set<Transaction> getTransactionSet(String typeName) {
     String tName = convertFirstLetterToUpper(typeName);
     if (!typesAndTransactionSet.containsKey(tName)) {
       return null;
@@ -45,7 +45,23 @@ public abstract class Category implements Command {
   }
 
 
-  private String convertFirstLetterToUpper(String typeName) {
+  protected String convertFirstLetterToUpper(String typeName) {
     return Helper.firstLetterToUpperCase(typeName);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Category category)) {
+      return false;
+    }
+    return Objects.equals(name, category.name);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(name);
   }
 }
